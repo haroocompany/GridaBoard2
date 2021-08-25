@@ -42,6 +42,7 @@ export const deleteAllFromTrash = async () => {
   const docArr = [];
   const db = secondaryFirebase.firestore();
   const userId = firebase.auth().currentUser.email;
+  const uid = firebase.auth().currentUser.uid;
 
   //delete from db
   await db.collection(userId)
@@ -74,14 +75,14 @@ export const deleteAllFromTrash = async () => {
     });
 
       
-    const thumbnailRef = storageRef.child(`thumbnail/${deletedDocId}.png`);
+    const thumbnailRef = storageRef.child(`thumbnail/${uid}/${deletedDocId}.png`);
     thumbnailRef.delete().then(function() {
       // File deleted successfully
     }).catch(function(error) {
       // Uh-oh, an error occurred!
     });
 
-    const gridaRef = storageRef.child(`grida/${deletedDocId}.grida`);
+    const gridaRef = storageRef.child(`grida/${uid}/${deletedDocId}.grida`);
     gridaRef.delete().then(function() {
       // File deleted successfully
     }).catch(function(error) {
